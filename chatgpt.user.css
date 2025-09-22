@@ -1,0 +1,135 @@
+/* ==UserStyle==
+@name           Chatgpt glass effect
+@namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
+@version        1.0.0
+@description    Glass effect for chatgpt.com
+@author         nopeless
+
+@var select background-image-fallback "Preset Background" {
+ "Your Name": "url(https://images2.alphacoders.com/742/thumb-1920-742320.png)",
+ "Re-Zero": "url(https://images4.alphacoders.com/711/711904.png)",
+ "Madoka": "url(https://images2.alphacoders.com/784/thumb-1920-784533.jpg)",
+ "Frieren (space)": "url(https://images3.alphacoders.com/137/thumb-1920-1376375.png)",
+ "Frieren (magic)": "url(https://images6.alphacoders.com/135/thumb-1920-1355194.jpeg)",
+ "Space": "url(https://images8.alphacoders.com/137/thumb-1920-1370824.png)",
+ "No Game No Life": "url(https://picfiles.alphacoders.com/439/thumb-1920-439700.png)",
+ "None": "none"
+}
+@var text background-image      "Custom BG ex: url(\"https://link.to/image.png\")" "var(--background-image-fallback)"
+@var range override-blur        "Backdrop blur"           [3,  0, 10,  1, "px"]
+@var range override-brightness  "Backdrop brightness"     [70, 0, 100, 5, "%"]
+@var color backdrop-color       "Backdrop color"          "#00000060"
+@var range background-align-x   "Align horizontal"        [50, 0, 100, 5, "%"]
+@var range background-align-y   "Align vertical"          [50, 0, 100, 5, "%"]
+@var range dim-top              "Dim gradient-top"        [50, 0, 100, 5, "%"]
+@var range dim-bottom           "Dim gradient-bottom"     [50, 0, 100, 5, "%"]
+@var text bottom-container-text "Text below input"        "'You are loved <3'"
+@var color accent-color         "Accent color (light)"    "#FFFFFF"
+@var color under-color          "Accent color (dark)"     "#808080"
+@var color code-background-color "Codeblock background color" "#00000020"
+==/UserStyle== */
+@-moz-document domain("chatgpt.com") {
+
+  /*   fixups for messy site css */
+  @layer utilities {
+    .dark\:bg-\[\#303030\]\!:is(.dark *) {
+      background-color: var(--under-color) !important
+    }
+  }
+
+  /*   remove all background */
+  *,
+  *::after {
+    background: transparent !important;
+  }
+
+  .bg-token-sidebar-surface-primary {
+    background: var(--code-background-color) !important;
+  }
+
+  :root {
+    --tw-backdrop-blur: 10px;
+  }
+  
+  * {
+    --tw-backdrop-blur: blur(var(--override-blur));
+    --tw-backdrop-brightness: brightness(var(--override-brightness));
+  }
+
+  /* allow overriding tailwind backdrops */
+  [class*=\:backdrop-blur]::before {
+    --tw-backdrop-blur: blur(var(--override-blur));
+  }
+  [class*=\:brightness]::before {
+    --tw-backdrop-brightness: brightness(var(--override-brightness));
+  }
+  
+  /*   Use tailwind backdrop system for other elements */
+  [data-radix-popper-content-wrapper] > div:nth-child(1) {
+    backdrop-filter: var(--tw-backdrop-blur);
+    background-color: var(--backdrop-color) !important;
+    clip-path: inset(0 round var(--override-blur));
+  }
+  
+  div.user-message-bubble-color,
+  div.markdown :is(p, pre)
+  {
+    backdrop-filter: var(--tw-backdrop-blur);
+  }
+
+  div.markdown p {
+    width: fit-content;
+    border-radius: var(--override-blur);
+    clip-path: inset(0 round var(--override-blur));
+  }
+  
+  /*   set max width to full */
+  [class*=thread-lg] {
+    max-width: unset;
+  }
+
+  /*   remove margin overlapping issue */
+  .-mb-\(--composer-overlap-px\) {
+    margin: 0;
+  }
+  /*   make buttons visible again */
+  button.btn-primary,
+  span[class*="radix-state"] {
+    background: var(--accent-color) !important;
+  }
+
+  /*   switches */
+  button[class*="radix-state"] {
+    background: #fff3 !important;
+  }
+
+  /*   image background */
+  html  {
+    background: linear-gradient(rgba(0, 0, 0, var(--dim-top)), rgba(0, 0, 0, var(--dim-bottom))),
+    var(--background-image, var(--background-image-fallback)) no-repeat var(--background-align-x) var(--background-align-y)/cover !important;
+  }
+
+  /*   fix side panel scrolling overlap (this is the only fix) */
+  #history {
+    overflow-y: scroll;
+  }
+
+  /* compact chat */
+  nav[class^="group/scrollport"] > * {
+    padding: 0;
+  }
+
+  /*   change chatgpt can make mistakes message + style changes */
+  #thread-bottom-container > :nth-last-child(1) {
+    padding: 0;
+    min-height: 1.5rem;
+  }
+  #thread-bottom-container > :nth-last-child(1) > div {
+    font-size: 0;
+  }
+
+  #thread-bottom-container > :nth-last-child(1) > div::before {
+    font-size: 12px;
+    content: var(--bottom-container-text);
+  }
+}
