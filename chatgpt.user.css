@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT glass effect by nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.1.0
+@version        1.2.0
 @description    Glass effect for chatgpt.com
 @author         nopeless
 
@@ -14,101 +14,212 @@
  "Stranded Valley": "url(https://i.redd.it/smjx0oc21w0e1.png)",
  "Space": "url(https://images8.alphacoders.com/137/thumb-1920-1370824.png)",
  "No Game No Life": "url(https://picfiles.alphacoders.com/439/thumb-1920-439700.png)",
- "None": "none"
+ "Gray": "gray",
+ "Black": "black",
+ "Navy": "#303655",
+ "Pastel": "linear-gradient(-45deg, #ffb3ba, #ffdfba, #ffffba, #baffc9, #bae1ff, #d7baff)",
+ "Classic": "linear-gradient(45deg,#1e1e2e,#181825,#11111b,#313244,#45475a)",
+ "Default": "#3A3A3A"
 }
-@var text background-image      "Custom BG ex: url(\"https://link.to/image.png\")" "var(--background-image-fallback)"
-@var range override-blur        "Backdrop blur"           [3,  0, 10,  1, "px"]
-@var range override-brightness  "Backdrop brightness"     [70, 0, 100, 5, "%"]
-@var color backdrop-color       "Backdrop color"          "#00000060"
-@var range background-align-x   "Align horizontal"        [50, 0, 100, 5, "%"]
-@var range background-align-y   "Align vertical"          [50, 0, 100, 5, "%"]
-@var range dim-top              "Dim gradient-top"        [50, 0, 100, 5, "%"]
-@var range dim-bottom           "Dim gradient-bottom"     [50, 0, 100, 5, "%"]
-@var color accent-color         "Accent color (light)"    "#FFFFFF"
-@var color under-color          "Accent color (dark)"     "#70707080"
-@var range reading-max-width    "Max width for paragraphs" [50,  10, 200,  10, "rem"]
-@var color code-background-color "Codeblock background color" "#00000020"
-@var text bottom-container-text "Text below input"        "'You are loved <3'"
+@var text background-image        "Custom Background"        "var(--background-image-fallback)"
+@var range background-align-x     "Align horizontal"         [50, 0, 100, 5, "%"]
+@var range background-align-y     "Align vertical"           [50, 0, 100, 5, "%"]
+@var range glass-blur             "Blur strength"            [2,  0, 10,  1, "px"]
+@var range backdrop-brightness    "Backdrop transparency"    [70, 0, 100, 5, "%"]
+@var range dim-top                "Dim gradient-top"         [50, 0, 100, 5, "%"]
+@var range dim-bottom             "Dim gradient-bottom"      [50, 0, 100, 5, "%"]
+@var color accent-color           "Accent color (light)"     "#FFFFFF"
+@var range chat-padding-x         "Chat horizontal margins"  [3,  1, 10,  1, "rem"]
+@var range chat-max-width         "Chat max width"           [100,  50, 200,  10, "rem"]
+@var range reading-max-width      "Max width for paragraphs" [50,  10, 200,  10, "rem"]
+@var color code-background-color  "Codeblock background color" "#10101040"
+@var select codeblock-width       "Codeblock word wrap" {
+  "Wrap": "100%",
+  "Scroll": "max-content"
+}
+@var text bottom-container-text   "Text below input"        "'You are loved <3'"
+@var text chat-input-placeholder  "Input placeholder"        "'ask away!'"
+@var text sidebar-active-bullet   "Selected chat icon"      "'•'"
 ==/UserStyle== */
 @-moz-document domain("chatgpt.com") {
 
-/* fixups for messy site css */
+:root {
+--blur-around-text: 2px;
+
+/* derived properties */
+--__backdrop-brightness-to-color: hsl(0, 0%, 70%, calc(10% + (100% - var(--backdrop-brightness)) / 3));
+
+}
+
+/* override accent colors */
+[data-chat-theme="default"],
+[data-chat-theme="default"] .dark {
+--theme-user-msg-bg:var(--accent-color);
+--theme-submit-btn-bg:var(--accent-color);
+--theme-secondary-btn-bg:var(--accent-color);
+--theme-entity-accent: var(--accent-color);
+--theme-user-selection-bg: color-mix(in srgb, var(--accent-color), #0000);
+--theme-attribution-highlight-bg: color-mix(in srgb, var(--accent-color), #0000);
+
+}
+
+/* restore accent pill selection */
+.h-2\.5.w-2\.5.rounded-full {
+background: var(--theme-secondary-btn-bg);
+
+}
+
+/* === ACCENT MODIFICATIONS === */
 @layer utilities {
-  .dark\:bg-\[\#303030\]\!:is(.dark *) {
-    background: var(--under-color) !important
+  .bg-token-text-primary\! {
+    background-color: var(--theme-submit-btn-bg);
+  }
+
+  .dark\:bg-\[\#303030\],
+  .user-message-bubble-color {
+    background-color: transparent !important;
   }
 }
 
+/*  === BACKGROUND === */
 /* remove all background */
 *,
-*::after {
+.content-fade.single-line::after,
+div[data-testid="modal-settings"] > :first-child::before,
+#stage-slideover-sidebar {
   background: transparent !important;
 }
 
-/*   restore background */
-.bg-token-sidebar-surface-primary {
-  background: var(--code-background-color) !important;
+/* force remove a few backgrounds as they are !important by site */
+@layer utilities {
+  .dark\:bg-\[\#303030\]\!:is(.dark *) {
+    background: transparent !important;
+  }
 }
 
+
+/*   image background */
+html {
+  background : linear-gradient(rgba(0, 0, 0, var(--dim-top)), rgba(0, 0, 0, var(--dim-bottom))),
+  var(--background-image, var(--background-image-fallback)) no-repeat calc(100% - var(--background-align-x)) var(--background-align-y)/cover !important;
+}
+
+/* === FROSTED GLASS EFFECT === */
+/* Use tailwind backdrop system for other elements [settings menu, narrow-sidebar, ask chatgpt] */
+[data-radix-popper-content-wrapper] > div:first-child,
+#stage-popover-sidebar,
+.btn.active\:opacity-1,
+[data-testid="modal-settings"] > div,
 .__menu-item[data-active] {
-  background: var(--under-color) !important;
+  backdrop-filter: blur(var(--glass-blur)) brightness(var(--backdrop-brightness));
+  background: transparent;
 }
 
-:root {
-  --tw-backdrop-blur: 10px;
+/* === SIDEBAR === */
+.__menu-item[data-active]::before {
+  content: var(--sidebar-active-bullet);
 }
 
-* {
-  --tw-backdrop-blur: blur(var(--override-blur));
-  --tw-backdrop-brightness: brightness(var(--override-brightness));
+/* === CHAT VISUAL === */
+/* ensure margins for small screens */
+article[data-turn="user"] {
+  padding-left: 2rem;
 }
 
-/* allow overriding tailwind backdrops */
-[class*=\:backdrop-blur]::before {
-  --tw-backdrop-blur: blur(var(--override-blur));
+article[data-turn="assistant"] {
+  padding-right: 2rem;
 }
 
-[class*=\:brightness]::before {
-  --tw-backdrop-brightness: brightness(var(--override-brightness));
-}
-
-/*   Use tailwind backdrop system for other elements */
-[data-radix-popper-content-wrapper] > div:nth-child(1) {
-  backdrop-filter: var(--tw-backdrop-blur);
-  background: var(--backdrop-color) !important;
-  clip-path: inset(0 round var(--override-blur));
+.user-message-bubble-color {
+  padding: 5px;
 }
 
 .user-message-bubble-color,
-.markdown :is(p, pre) {
-  backdrop-filter: var(--tw-backdrop-blur);
-}
-
 .markdown p {
+  position: relative;
   width: fit-content;
-  border-radius: var(--override-blur);
-  clip-path: inset(0 round var(--override-blur));
 }
 
-/*   set max width to full */
-[class*=thread-lg] {
-  max-width: unset;
+/* add blur to textual elements and surrounding */
+.user-message-bubble-color::before,
+.markdown p::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--blur-around-text));
+  left: calc(-1 * var(--blur-around-text));
+  width: calc(100% + 2 * var(--blur-around-text));
+  height: calc(100% + 2 * var(--blur-around-text));
+
+  backdrop-filter: blur(var(--glass-blur));
+  border-radius: calc(2 * var(--blur-around-text));
+  z-index: -1;
 }
 
-/*   code block layout fixes */
+
+/* header consistency fix when resizing */
+#page-header,
+div.h-header-height.sticky {
+  position: absolute;
+  width: 100%;
+  backdrop-filter: blur(var(--glass-blur));
+}
+
+.thread-xl\:pt-header-height {
+  padding-top: 0;
+}
+
+.thread-xl\:pt-\(--header-height\) {
+  padding-top: var(--header-height);
+}
+
+
+/* Change chat max width */
+.group\/turn-messages {
+  max-width: var(--chat-max-width);
+}
+
+/* Change horizontal margins around chat*/
+.text-base {
+  padding-left: var(--chat-padding-x);
+  padding-right: var(--chat-padding-x);
+}
+
+
+/* === CODEBLOCK VISUAL === */
+/* code background color */
+pre .bg-token-sidebar-surface-primary {
+  background: var(--code-background-color) !important;
+}
+
+/* code block layout fixes */
 .markdown pre {
   width: fit-content;
+  backdrop-filter: blur(var(--glass-blur));
   min-width: calc(var(--spacing) * 8 * 6);
   max-width: 100%;
 }
 
+/* allow layout calculations for code blocks */
 .markdown pre > div {
   contain: none;
 }
 
-.markdown pre code {
+/* allow text to overflow */
+.markdown pre > div:first-child > div:last-child > code {
   display: block;
   width: max-content;
+  max-width: var(--codeblock-width);
+}
+
+/* increase right margin a bit for breathing room */
+.markdown pre > div > div:last-child {
+  padding: 0.75rem;
+  padding-right: 2rem;
+}
+
+/* baseline is wrap */
+.markdown pre span {
+  text-wrap: wrap;
 }
 
 /*   paragraph layout helpers */
@@ -118,27 +229,44 @@ markdown td,
   max-width: var(--reading-max-width);
 }
 
-/*   remove margin overlapping issue */
+/* === CHAT INPUT BOX === */
+.placeholder::before {
+  content: var(--chat-input-placeholder) !important;
+}
+
+/* remove margin overlapping issue */
 .-mb-\(--composer-overlap-px\) {
   margin: 0;
 }
 
-/*   make buttons visible again */
-button.btn-primary,
-span[class*="radix-state"] {
-  background: var(--accent-color) !important;
+/* change chatgpt can make mistakes message + style changes */
+#thread-bottom-container > :last-child {
+  padding: 0;
+  min-height: 1.5rem;
 }
 
-/*   switches */
-button[class*="radix-state"] {
-  background: #fff3 !important;
+#thread-bottom-container > :last-child > div {
+  font-size: 0;
 }
 
-/*   image background */
-html {
-  background: linear-gradient(rgba(0, 0, 0, var(--dim-top)), rgba(0, 0, 0, var(--dim-bottom))),
-  var(--background-image, var(--background-image-fallback)) no-repeat calc(100% - var(--background-align-x)) var(--background-align-y)/cover !important;
+#thread-bottom-container > :last-child > div::before {
+  font-size: 12px;
+  content: var(--bottom-container-text);
 }
+
+
+/* === UI Elements === */
+/* switch circle, button */
+button[aria-checked] > span {
+  background: var(--theme-entity-accent) !important;
+}
+
+/* switch and button background */
+button[aria-checked] {
+  background: var(--__backdrop-brightness-to-color) !important;
+}
+
+
 
 /*   fix side panel scrolling overlap (this is the only fix) */
 #history {
@@ -146,23 +274,13 @@ html {
 }
 
 /* compact chat */
-nav[class^="group/scrollport"] > * {
+nav[aria-label="Chat history"] > :not(:last-child) {
   padding: 0;
 }
 
-/*   change chatgpt can make mistakes message + style changes */
-#thread-bottom-container > :nth-last-child(1) {
-  padding: 0;
-  min-height: 1.5rem;
+#snorlax-heading {
+  padding-bottom: 0.5rem;
 }
 
-#thread-bottom-container > :nth-last-child(1) > div {
-  font-size: 0;
-}
-
-#thread-bottom-container > :nth-last-child(1) > div::before {
-  font-size: 12px;
-  content: var(--bottom-container-text);
-}
 
 }
