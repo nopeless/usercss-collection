@@ -1,12 +1,13 @@
 /* ==UserStyle==
-@name           ChatGPT glass effect by nopeless
+@name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.2.0
+@version        1.3.0
 @description    Glass effect for chatgpt.com
 @author         nopeless
 
 @var select background-image-fallback "Preset Background" {
- "Your Name": "url(https://images2.alphacoders.com/742/thumb-1920-742320.png)",
+ "Your Name sky": "url(https://r4.wallpaperflare.com/wallpaper/94/797/206/kimi-no-na-wa-makoto-shinkai-starry-night-comet-wallpaper-89c0584d016a0d0be617288fb071564d.jpg)",
+ "Your Name space": "url(https://images2.alphacoders.com/742/thumb-1920-742320.png)",
  "Re-Zero": "url(https://images4.alphacoders.com/711/711904.png)",
  "Madoka": "url(https://images2.alphacoders.com/784/thumb-1920-784533.jpg)",
  "Frieren (space)": "url(https://images3.alphacoders.com/137/thumb-1920-1376375.png)",
@@ -49,18 +50,18 @@
 /* derived properties */
 --__backdrop-brightness-to-color: hsl(0, 0%, 70%, calc(10% + (100% - var(--backdrop-brightness)) / 3));
 
+
 }
 
 /* override accent colors */
 [data-chat-theme="default"],
 [data-chat-theme="default"] .dark {
---theme-user-msg-bg:var(--accent-color);
---theme-submit-btn-bg:var(--accent-color);
---theme-secondary-btn-bg:var(--accent-color);
---theme-entity-accent: var(--accent-color);
---theme-user-selection-bg: color-mix(in srgb, var(--accent-color), #0000);
---theme-attribution-highlight-bg: color-mix(in srgb, var(--accent-color), #0000);
-
+  --theme-user-msg-bg:var(--accent-color);
+  --theme-submit-btn-bg:var(--accent-color);
+  --theme-secondary-btn-bg:var(--accent-color);
+  --theme-entity-accent: var(--accent-color);
+  --theme-user-selection-bg: color-mix(in srgb, var(--accent-color), #0000);
+  --theme-attribution-highlight-bg: color-mix(in srgb, var(--accent-color), #0000);
 }
 
 /* restore accent pill selection */
@@ -95,12 +96,15 @@ div[data-testid="modal-settings"] > :first-child::before,
   .dark\:bg-\[\#303030\]\!:is(.dark *) {
     background: transparent !important;
   }
-}
 
+  .composer-submit-button-color {
+    color: inherit;
+  }
+}
 
 /*   image background */
 html {
-  background : linear-gradient(rgba(0, 0, 0, var(--dim-top)), rgba(0, 0, 0, var(--dim-bottom))),
+  background: linear-gradient(rgba(0, 0, 0, var(--dim-top)), rgba(0, 0, 0, var(--dim-bottom))),
   var(--background-image, var(--background-image-fallback)) no-repeat calc(100% - var(--background-align-x)) var(--background-align-y)/cover !important;
 }
 
@@ -121,6 +125,15 @@ html {
 }
 
 /* === CHAT VISUAL === */
+/* small splash */
+#thread-bottom-container {
+  margin: auto;
+  max-width: var(--chat-max-width);
+}
+#thread-bottom > div:first-child > div:first-child {
+  max-width: none;
+}
+
 /* ensure margins for small screens */
 article[data-turn="user"] {
   padding-left: 2rem;
@@ -251,13 +264,16 @@ markdown td,
 
 #thread-bottom-container > :last-child > div::before {
   font-size: 12px;
+  display: block;
+  text-align: center;
   content: var(--bottom-container-text);
 }
 
 
 /* === UI Elements === */
 /* switch circle, button */
-button[aria-checked] > span {
+button[aria-checked] > span,
+button.btn-primary {
   background: var(--theme-entity-accent) !important;
 }
 
@@ -280,6 +296,10 @@ nav[aria-label="Chat history"] > :not(:last-child) {
 
 #snorlax-heading {
   padding-bottom: 0.5rem;
+}
+
+#history > aside {
+  margin-top: -1.5rem;
 }
 
 
