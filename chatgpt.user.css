@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.4.1
+@version        1.4.2
 @description    Glass effect for chatgpt.com
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -54,7 +54,7 @@
 :root {
 --blur-around-text: 2px;
 /* derived properties */
---__backdrop-brightness-to-color: hsl(0, 0%, 70%, calc(10% + (100% - var(--backdrop-brightness)) / 3));
+--__backdrop-brightness-to-background: hsl(0, 0%, 0%, calc(50% - (100% - var(--backdrop-brightness)) / 2));
 
 }
 
@@ -129,6 +129,11 @@ html {
 .__menu-item[data-active] {
   backdrop-filter: blur(var(--glass-blur)) brightness(var(--backdrop-brightness));
   background: transparent;
+}
+
+
+.popover {
+  background: var(--__backdrop-brightness-to-background) !important;
 }
 
 /* === SIDEBAR === */
@@ -320,7 +325,7 @@ button.btn-primary {
 
 /* switch and button background */
 button[aria-checked] {
-  background: var(--__backdrop-brightness-to-color) !important;
+  background: gray !important;
 }
 
 /*   fix side panel scrolling overlap (this is the only fix) */
