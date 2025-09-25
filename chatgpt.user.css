@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.3.5
+@version        1.3.6
 @description    Glass effect for chatgpt.com
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -58,22 +58,25 @@
 --__backdrop-brightness-to-color: hsl(0, 0%, 70%, calc(10% + (100% - var(--backdrop-brightness)) / 3));
 
 
+
 }
 
 /* override accent colors */
 [data-chat-theme="default"],
 [data-chat-theme="default"] .dark {
-  --theme-user-msg-bg:var(--accent-color);
-  --theme-submit-btn-bg:var(--accent-color);
-  --theme-secondary-btn-bg:var(--accent-color);
-  --theme-entity-accent: var(--accent-color);
-  --theme-user-selection-bg: color-mix(in srgb, var(--accent-color), #0000);
-  --theme-attribution-highlight-bg: color-mix(in srgb, var(--accent-color), #0000);
+--theme-user-msg-bg:var(--accent-color);
+--theme-submit-btn-bg:var(--accent-color);
+--theme-secondary-btn-bg:var(--accent-color);
+--theme-entity-accent: var(--accent-color);
+--theme-user-selection-bg: color-mix(in srgb, var(--accent-color), #0000);
+--theme-attribution-highlight-bg: color-mix(in srgb, var(--accent-color), #0000);
+
 }
 
 /* restore accent pill selection */
 .h-2\.5.w-2\.5.rounded-full {
 background: var(--theme-secondary-btn-bg);
+
 
 }
 
@@ -143,7 +146,7 @@ html {
 }
 
 #thread-bottom > div:first-child > div:first-child {
-  max-width: none;
+  max-width: var(--chat-max-width);
 }
 
 /* ensure margins for small screens */
@@ -170,10 +173,12 @@ article[data-turn="assistant"] {
 .markdown p::before {
   content: "";
   position: absolute;
-  top: calc(-1 * var(--blur-around-text));
+
+  top: 0;
+  height: 100%;
+
   left: calc(-1 * var(--blur-around-text));
   width: calc(100% + 2 * var(--blur-around-text));
-  height: calc(100% + 2 * var(--blur-around-text));
 
   backdrop-filter: blur(var(--glass-blur));
   border-radius: calc(2 * var(--blur-around-text));
@@ -216,7 +221,7 @@ div.h-header-height.sticky {
 
 
 /*   paragraph layout helpers */
-.markdown p,
+.markdown :is(p, hr),
 markdown td,
 .user-message-bubble-color {
   max-width: var(--reading-max-width);
@@ -261,6 +266,7 @@ pre .bg-token-sidebar-surface-primary {
 .placeholder::after {
   content: none !important;
 }
+
 .placeholder::before {
   color: var(--text-tertiary);
   content: var(--chat-input-placeholder) !important;
@@ -321,5 +327,6 @@ nav[aria-label="Chat history"] > :not(:last-child) {
 #history > aside {
   margin-top: -1.5rem;
 }
+
 
 }
