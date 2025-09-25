@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.5.0
+@version        1.5.1
 @description    Glass effect for chatgpt.com
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -59,7 +59,7 @@
 :root {
 --blur-around-text: 2px;
 /* derived properties */
---__backdrop-brightness-to-background: hsl(0, 0%, 0%, calc(50% - (100% - var(--backdrop-brightness)) / 2));
+--__backdrop-brightness-to-background: hsl(0, 0%, 0%, calc(40% - (100% - var(--backdrop-brightness)) / 2));
 
 }
 
@@ -87,9 +87,9 @@ background: var(--theme-secondary-btn-bg);
     background-color: var(--theme-submit-btn-bg);
   }
 
-  .dark\:bg-\[\#303030\],
+  /*   user message */
   .user-message-bubble-color {
-    background-color: transparent !important;
+    background-color: transparent;
   }
 }
 
@@ -105,7 +105,7 @@ div[data-testid="modal-settings"] > :first-child::before,
 /* force remove a few backgrounds as they are !important by site */
 @layer utilities {
   .dark\:bg-\[\#303030\]\!:is(.dark *) {
-    background: transparent !important;
+    background: transparent;
   }
 
   .composer-submit-button-color {
@@ -125,19 +125,41 @@ html {
 [data-radix-popper-content-wrapper] > div:first-child,
 /* narrow mode overlap */
 #stage-popover-sidebar,
+/* search GPTs */
+#search,
 /* when selection ask chatgpt */
 .btn.active\:opacity-1,
 /* modal settings */
 [data-testid="modal-settings"] > div,
 /* modal search chats */
 [data-testid="modal-fanny-pack"] > div,
+/* modal new project */
+[data-testid="modal-new-project-enhanced"] > div,
+/* sidebar selected */
 .__menu-item[data-active] {
   backdrop-filter: blur(var(--glass-blur)) brightness(var(--backdrop-brightness));
   background: transparent;
 }
 
 .popover {
-  background: var(--__backdrop-brightness-to-background) !important;
+  background: var(--__backdrop-brightness-to-background);
+}
+
+/* this entire section is just for search GPTs */
+@layer utilities {
+  div:has(> div > #search:focus), #search:focus {
+    border-bottom-color: transparent;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+  #search {
+    background: var(--__backdrop-brightness-to-background) !important;
+  }
+  [data-radix-popper-content-wrapper] > div:first-child {
+    background: var(--__backdrop-brightness-to-background) !important;
+/*     account for border bottom */
+    top: -1px !important;
+  }
 }
 
 /* === SIDEBAR === */
