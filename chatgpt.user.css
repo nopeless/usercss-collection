@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.5.1
+@version        1.5.2
 @description    Glass effect for chatgpt.com
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -105,7 +105,7 @@ div[data-testid="modal-settings"] > :first-child::before,
 /* force remove a few backgrounds as they are !important by site */
 @layer utilities {
   .dark\:bg-\[\#303030\]\!:is(.dark *) {
-    background: transparent;
+    background: transparent !important;
   }
 
   .composer-submit-button-color {
@@ -240,7 +240,7 @@ div.h-header-height.sticky {
 
 /* fix x scrolling caused by surround blur and a few other random things */
 #page-header + div > div:first-child > div:first-child {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Change horizontal margins around chat*/
