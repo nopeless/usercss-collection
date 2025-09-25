@@ -1,8 +1,8 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.5.2
-@description    Frosted Glass UI overhaul that enhances ChatGPT UI while keeping its unique style
+@version        1.6.0
+@description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
 
@@ -147,17 +147,20 @@ html {
 
 /* this entire section is just for search GPTs */
 @layer utilities {
-  div:has(> div > #search:focus), #search:focus {
+  div:has(> div > #search:focus),
+  #search:focus {
     border-bottom-color: transparent;
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
   }
+
   #search {
     background: var(--__backdrop-brightness-to-background) !important;
   }
+
   [data-radix-popper-content-wrapper] > div:first-child {
     background: var(--__backdrop-brightness-to-background) !important;
-/*     account for border bottom */
+    /*     account for border bottom */
     top: -1px !important;
   }
 }
@@ -203,14 +206,14 @@ article[data-turn="assistant"] > div {
 }
 
 .user-message-bubble-color,
-.markdown :is(p, table) {
+.markdown :is(p, table, .katex) {
   position: relative;
   width: fit-content;
 }
 
 /* add blur to textual elements and surrounding */
 .user-message-bubble-color::before,
-.markdown :is(p, table)::before {
+.markdown :is(p, table, .katex)::before {
   content: "";
   position: absolute;
   top: 0;
@@ -269,6 +272,19 @@ markdown td,
 
 .markdown > div[class^="_tableContainer"] > div > div.sticky {
   inset-inline-end: 0;
+}
+
+/* === MATH VISUAL === */
+.katex-display {
+  min-width: var(--codeblock-fit-mode);
+  width: max-content;
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
+.katex {
+  margin: 0 auto;
+  width: max-content;
 }
 
 /* === CODEBLOCK VISUAL === */
