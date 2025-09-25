@@ -55,6 +55,7 @@
 --blur-around-text: 2px;
 /* derived properties */
 --__backdrop-brightness-to-color: hsl(0, 0%, 70%, calc(10% + (100% - var(--backdrop-brightness)) / 3));
+
 }
 
 /* override accent colors */
@@ -114,11 +115,17 @@ html {
 }
 
 /* === FROSTED GLASS EFFECT === */
-/* Use tailwind backdrop system for other elements [settings menu, narrow-sidebar, ask chatgpt] */
+/* Use tailwind backdrop system for other elements */
+/* clicking account button */
 [data-radix-popper-content-wrapper] > div:first-child,
+/* narrow mode overlap */
 #stage-popover-sidebar,
+/* when selection ask chatgpt */
 .btn.active\:opacity-1,
+/* modal settings */
 [data-testid="modal-settings"] > div,
+/* modal search chats */
+[data-testid="modal-fanny-pack"] > div,
 .__menu-item[data-active] {
   backdrop-filter: blur(var(--glass-blur)) brightness(var(--backdrop-brightness));
   background: transparent;
@@ -130,8 +137,6 @@ html {
 }
 
 /* === CHAT VISUAL === */
-
-
 /* implement chat-max-width */
 #page-header + div > div:first-child > div:last-child > div:last-child,
 #thread-bottom > div:first-child {
