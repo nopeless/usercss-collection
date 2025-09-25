@@ -1,12 +1,12 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.4.2
+@version        1.5.0
 @description    Glass effect for chatgpt.com
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
 
-@var select background-image-fallback "Preset Background" {
+@var select background-image-fallback "BG - Preset" {
  "Your Name sky": "url(https://r4.wallpaperflare.com/wallpaper/94/797/206/kimi-no-na-wa-makoto-shinkai-starry-night-comet-wallpaper-89c0584d016a0d0be617288fb071564d.jpg)",
  "Your Name space": "url(https://images2.alphacoders.com/742/thumb-1920-742320.png)",
  "Re-Zero": "url(https://images4.alphacoders.com/711/711904.png)",
@@ -23,32 +23,37 @@
  "Classic": "linear-gradient(45deg,#1e1e2e,#181825,#11111b,#313244,#45475a)",
  "Default": "#3A3A3A"
 }
-@var text background-image        "Custom Background"         "var(--background-image-fallback)"
-@var range background-align-x     "Align horizontal"          [50, 0, 100, 5, "%"]
-@var range background-align-y     "Align vertical"            [50, 0, 100, 5, "%"]
-@var range glass-blur             "Blur strength"             [2,  0, 10,  1, "px"]
-@var range backdrop-brightness    "Backdrop transparency"     [70, 0, 100, 5, "%"]
-@var range dim-top                "Dim gradient-top"          [50, 0, 100, 5, "%"]
-@var range dim-bottom             "Dim gradient-bottom"       [50, 0, 100, 5, "%"]
-@var color accent-color           "Accent color (light)"      "#FFFFFF"
-@var range chat-horizontal-margin "Chat horizontal margins"   [3,  0, 5,  0.5, "rem"]
-@var range chat-max-width         "Chat max width"            [100,  50, 200,  10, "rem"]
-@var range chat-role-padding      "Message horizontal margin" [4, 0, 10, 1, "rem"]
-@var range reading-max-width      "Max width for paragraphs"  [50,  10, 100,  5, "rem"]
-@var color code-background-color  "Codeblock background color" "#10101040"
-@var select codeblock-width       "Codeblock word wrap" {
+@var text background-image        "BG - Custom"            "var(--background-image-fallback)"
+@var range background-align-x     "BG - Align horizontal"  [50, 0, 100, 5, "%"]
+@var range background-align-y     "BG - Align vertical"    [50, 0, 100, 5, "%"]
+@var range dim-top                "BG - Dim top"           [50, 0, 100, 5, "%"]
+@var range dim-bottom             "BG - Dim bottom"        [50, 0, 100, 5, "%"]
+
+@var range glass-blur             "UI - Blur strength"         [2,  0, 10,  1, "px"]
+@var range backdrop-brightness    "UI - Popup transparency"    [70, 0, 100, 5, "%"]
+@var color accent-color           "UI - Accent color (light)"  "#FFFFFF"
+
+@var text sidebar-active-bullet   "Sidebar - Selected chat icon"  "'•'"
+
+@var range chat-horizontal-margin "Chat - Horizontal margins"  [3,  0, 5,  0.5, "rem"]
+@var range chat-max-width         "Chat - Max width"           [100,  50, 200,  10, "rem"]
+
+@var range chat-role-padding      "Message - Left/Right margin"  [4, 0, 10, 1, "rem"]
+@var range reading-max-width      "Reading - Paragraph width"    [50,  10, 100,  5, "rem"]
+
+@var color code-background-color  "Code - Background color"      "#10101040"
+@var select codeblock-width       "Code - Word wrap" {
   "Wrap": "100%",
   "Scroll": "max-content"
 }
-@var select codeblock-fit-mode    "Codeblock fit mode" {
+@var select codeblock-fit-mode    "Code - Fit mode" {
   "Compact": "calc(var(--spacing) * 8 * 6)",
   "Paragraph": "var(--reading-max-width)",
   "Full": "100%"
 }
-@var text bottom-container-text   "Text below input"        "'You are loved <3'"
-@var text chat-input-placeholder  "Input placeholder"        "'ask away!'"
-@var range chat-input-radius      "Input border radius"     [28, 0, 28, 4, "px"]
-@var text sidebar-active-bullet   "Selected chat icon"      "'•'"
+@var text bottom-container-text   "Prompt - Text below"     "'You are loved <3'"
+@var text chat-input-placeholder  "Prompt - Placeholder"    "'ask away!'"
+@var range chat-input-radius      "Prompt - Border radius"  [28, 0, 28, 4, "px"]
 ==/UserStyle== */
 @-moz-document domain("chatgpt.com") {
 :root {
@@ -130,7 +135,6 @@ html {
   backdrop-filter: blur(var(--glass-blur)) brightness(var(--backdrop-brightness));
   background: transparent;
 }
-
 
 .popover {
   background: var(--__backdrop-brightness-to-background) !important;
