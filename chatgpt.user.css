@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.4.0
+@version        1.4.1
 @description    Glass effect for chatgpt.com
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -131,12 +131,16 @@ html {
 }
 
 /* === CHAT VISUAL === */
+
+
 /* implement chat-max-width */
-#page-header + div > div:first-child > div:last-child,
+#page-header + div > div:first-child > div:last-child > div:last-child,
 #thread-bottom > div:first-child {
   margin: 0 auto;
+  width: 100%;
   max-width: var(--chat-max-width);
-  padding: 0 var(--chat-horizontal-margin);
+  padding-left: var(--chat-horizontal-margin);
+  padding-right: var(--chat-horizontal-margin);
 }
 
 #thread-bottom > div:first-child > div:first-child {
