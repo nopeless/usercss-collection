@@ -55,7 +55,6 @@
 --blur-around-text: 2px;
 /* derived properties */
 --__backdrop-brightness-to-color: hsl(0, 0%, 70%, calc(10% + (100% - var(--backdrop-brightness)) / 3));
-
 }
 
 /* override accent colors */
