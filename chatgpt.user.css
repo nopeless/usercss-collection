@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.6.3
+@version        1.6.4
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -120,7 +120,7 @@ div[data-testid="modal-settings"] > :first-child::before {
   }
 }
 
-/*   image background */
+/* image background */
 body {
   background: linear-gradient(rgba(0, 0, 0, var(--dim-top)), rgba(0, 0, 0, var(--dim-bottom))),
   var(--background-image, var(--background-image-fallback)) no-repeat calc(100% - var(--background-align-x)) var(--background-align-y)/cover !important;
@@ -339,11 +339,12 @@ markdown td,
   content: var(--chat-input-placeholder) !important;
 }
 
+/* chat input box radius */
 form.group\/composer > div:last-child > div:first-child {
   border-radius: var(--chat-input-radius) !important;
 }
 
-/* remove margin overlapping issue */
+/* remove margin fix chat content bleeding into chat input box */
 .-mb-\(--composer-overlap-px\) {
   margin: 0;
 }
@@ -388,11 +389,13 @@ nav[aria-label="Chat history"] > :not(:last-child) {
   padding: 0;
 }
 
+/* new project padding bottom */
 #snorlax-heading {
   padding-bottom: 0.5rem;
 }
 
+/* remove top padding for proper scrolling for Chats list */
 #history > aside {
-  margin-top: -1.5rem;
+  padding-top: 0;
 }
 }
