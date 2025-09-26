@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.6.4
+@version        1.7.0
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -50,6 +50,15 @@
   "Compact": "calc(var(--spacing) * 8 * 6)",
   "Paragraph": "var(--reading-max-width)",
   "Full": "100%"
+}
+@var select math-fit-mode         "Math - Fit mode" {
+  "Compact": "calc(var(--spacing) * 8 * 6)",
+  "Paragraph": "var(--reading-max-width)",
+  "Full": "100%"
+}
+@var select math-margin           "Math - Center LaTeX" {
+  "Center": "auto",
+  "Left": "0"
 }
 @var text bottom-container-text   "Prompt - Text below"     "'You are loved <3'"
 @var text chat-input-placeholder  "Prompt - Placeholder"    "'ask away!'"
@@ -102,6 +111,7 @@ button,
 header,
 span,
 code,
+ul,
 /* prompt input bottom fade */
 .content-fade::after,
 /* settings modal background */
@@ -213,22 +223,22 @@ article[data-turn="assistant"] > div {
 }
 
 .user-message-bubble-color,
-.markdown :is(p, table, .katex) {
+.markdown :is(p, table, .katex-display) {
   position: relative;
   width: fit-content;
 }
 
 /* add blur to textual elements and surrounding */
 .user-message-bubble-color::before,
-.markdown :is(p, table, .katex)::before {
-  content: "";
+.markdown :is(p, table, .katex-display)::before {
   position: absolute;
-  top: 0;
-  height: 100%;
-  left: calc(-1 * var(--blur-around-text));
-  width: calc(100% + 2 * var(--blur-around-text));
-  backdrop-filter: blur(var(--glass-blur));
+  content: "";
+
+  inset: calc(-1 * var(--blur-around-text));
+
   border-radius: calc(2 * var(--blur-around-text));
+
+  backdrop-filter: blur(var(--glass-blur));
   z-index: -1;
 }
 
@@ -270,7 +280,7 @@ markdown td,
 .markdown > div[class^="_tableContainer"] {
   width: auto;
   margin-inline: 0;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .markdown > div[class^="_tableContainer"] > div {
@@ -283,15 +293,18 @@ markdown td,
 
 /* === MATH VISUAL === */
 .katex-display {
-  min-width: var(--codeblock-fit-mode);
-  width: max-content;
+  margin-left: var(--math-margin);
+  margin-right: var(--math-margin);
+  min-width: min(100%, var(--math-fit-mode));
+  width: fit-content;
   max-width: 100%;
-  overflow-x: scroll;
+
+  scrollbar-color: var(--scrollbar-color) transparent;
 }
 
 .katex {
-  margin: 0 auto;
-  width: max-content;
+  overflow-x: scroll;
+  overflow-y: clip;
 }
 
 /* === CODEBLOCK VISUAL === */
@@ -305,8 +318,8 @@ markdown td,
 .markdown pre > div {
   contain: none;
   backdrop-filter: blur(var(--glass-blur));
-  min-width: var(--codeblock-fit-mode);
-  width: max-content;
+  min-width: min(100%, var(--codeblock-fit-mode));
+  width: fit-content;
   max-width: 100%;
 }
 
