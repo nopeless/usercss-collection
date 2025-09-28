@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.7.0
+@version        1.7.1
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -15,6 +15,7 @@
  "Frieren (magic)": "url(https://images6.alphacoders.com/135/thumb-1920-1355194.jpeg)",
  "Stranded Valley": "url(https://i.redd.it/smjx0oc21w0e1.png)",
  "Space": "url(https://images8.alphacoders.com/137/thumb-1920-1370824.png)",
+ "Aqua Eterna": "url(https://www.desktopgeneration.com/images/art/gallery/aquaeterna.png)",
  "No Game No Life": "url(https://picfiles.alphacoders.com/439/thumb-1920-439700.png)",
  "Gray": "gray",
  "Black": "black",
@@ -34,6 +35,10 @@
 @var color accent-color           "UI - Accent color (light)"  "#FFFFFF"
 
 @var text sidebar-active-bullet   "Sidebar - Selected chat icon"  "'•'"
+
+@var text bottom-container-text   "Prompt - Text below"     "'You are loved <3'"
+@var text chat-input-placeholder  "Prompt - Placeholder"    "'ask away!'"
+@var range chat-input-radius      "Prompt - Border radius"  [28, 0, 28, 4, "px"]
 
 @var range chat-horizontal-margin "Chat - Horizontal margins"  [3,  0, 5,  0.5, "rem"]
 @var range chat-max-width         "Chat - Max width"           [100,  50, 200,  10, "rem"]
@@ -60,9 +65,6 @@
   "Center": "auto",
   "Left": "0"
 }
-@var text bottom-container-text   "Prompt - Text below"     "'You are loved <3'"
-@var text chat-input-placeholder  "Prompt - Placeholder"    "'ask away!'"
-@var range chat-input-radius      "Prompt - Border radius"  [28, 0, 28, 4, "px"]
 ==/UserStyle== */
 @-moz-document domain("chatgpt.com") {
 :root {
@@ -233,11 +235,8 @@ article[data-turn="assistant"] > div {
 .markdown :is(p, table, .katex-display)::before {
   position: absolute;
   content: "";
-
   inset: calc(-1 * var(--blur-around-text));
-
   border-radius: calc(2 * var(--blur-around-text));
-
   backdrop-filter: blur(var(--glass-blur));
   z-index: -1;
 }
@@ -298,7 +297,6 @@ markdown td,
   min-width: min(100%, var(--math-fit-mode));
   width: fit-content;
   max-width: 100%;
-
   scrollbar-color: var(--scrollbar-color) transparent;
 }
 
