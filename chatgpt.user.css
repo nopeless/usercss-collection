@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.7.1
+@version        1.7.2
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -51,12 +51,12 @@
   "Wrap": "100%",
   "Scroll": "max-content"
 }
-@var select codeblock-fit-mode    "Code - Fit mode" {
+@var select codeblock-min-width    "Code - Fit mode" {
   "Compact": "calc(var(--spacing) * 8 * 6)",
   "Paragraph": "var(--reading-max-width)",
   "Full": "100%"
 }
-@var select math-fit-mode         "Math - Fit mode" {
+@var select math-min-width         "Math - Fit mode" {
   "Compact": "calc(var(--spacing) * 8 * 6)",
   "Paragraph": "var(--reading-max-width)",
   "Full": "100%"
@@ -294,7 +294,7 @@ markdown td,
 .katex-display {
   margin-left: var(--math-margin);
   margin-right: var(--math-margin);
-  min-width: min(100%, var(--math-fit-mode));
+  min-width: min(100%, var(--math-min-width));
   width: fit-content;
   max-width: 100%;
   scrollbar-color: var(--scrollbar-color) transparent;
@@ -316,7 +316,7 @@ markdown td,
 .markdown pre > div {
   contain: none;
   backdrop-filter: blur(var(--glass-blur));
-  min-width: min(100%, var(--codeblock-fit-mode));
+  min-width: min(100%, var(--codeblock-min-width));
   width: fit-content;
   max-width: 100%;
 }
