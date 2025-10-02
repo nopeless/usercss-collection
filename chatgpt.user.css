@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.8.0
+@version        1.8.1
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -61,7 +61,7 @@
   "Paragraph": "var(--reading-max-width)",
   "Full": "100%"
 }
-@var select math-margin           "Math - Center LaTeX" {
+@var select math-margin           "Math - Align LaTeX" {
   "Center": "auto",
   "Left": "0"
 }
@@ -155,7 +155,9 @@ body {
 /* modal new project */
 [data-testid="modal-new-project-enhanced"] > div,
 /* sidebar selected */
-.__menu-item[data-active] {
+.__menu-item[data-active],
+/* popup "you've hit free plan limit" */
+aside.shadow-xxs {
   backdrop-filter: blur(var(--glass-blur)) brightness(var(--backdrop-brightness));
   background: transparent;
 }
@@ -397,6 +399,7 @@ button[aria-checked] {
   flex-direction: column;
   margin-bottom: 0;
 }
+
 #history {
   overflow-y: scroll;
 }
