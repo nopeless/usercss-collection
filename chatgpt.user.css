@@ -270,12 +270,12 @@ article[data-turn="assistant"] > div {
   padding: 5px;
 }
 
+/* === text blur backdrop anchor for ::before === */
 .user-message-bubble-color,
 .markdown :is(p,
 table,
 .katex) {
   position: relative;
-  width: fit-content;
 }
 
 /* add blur to textual elements and surrounding */
@@ -350,13 +350,17 @@ markdown td,
 }
 
 /* === MATH VISUAL === */
-.katex-display {
+.katex {
   margin-left: var(--math-margin);
   margin-right: var(--math-margin);
+}
+
+.katex-display {
   min-width: min(100%,
   var(--math-min-width));
   width: fit-content;
   max-width: 100%;
+
   scrollbar-color: var(--scrollbar-color) transparent;
   overflow-x: auto;
   overflow-y: clip;
