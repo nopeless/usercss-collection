@@ -358,7 +358,8 @@ markdown td,
   width: fit-content;
   max-width: 100%;
   scrollbar-color: var(--scrollbar-color) transparent;
-  overflow-x: scroll;
+  overflow-x: auto;
+  overflow-y: clip;
 /*   for reasons beyond my understanding, sometimes katex span elements overflow
   visually (not bb) and this is the only way to compensate for that */
   padding: 2px;
