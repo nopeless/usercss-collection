@@ -1,12 +1,13 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.8.2
+@version        1.9.0
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
+@preprocessor uso
 
-@var select background-image-fallback "BG - Preset" {
+@var select background-image-fallback    "BG - Preset" {
  "Your Name sky": "url(https://r4.wallpaperflare.com/wallpaper/94/797/206/kimi-no-na-wa-makoto-shinkai-starry-night-comet-wallpaper-89c0584d016a0d0be617288fb071564d.jpg)",
  "Your Name space": "url(https://images2.alphacoders.com/742/thumb-1920-742320.png)",
  "Re-Zero": "url(https://images4.alphacoders.com/711/711904.png)",
@@ -26,7 +27,7 @@
  "Classic": "linear-gradient(45deg,#1e1e2e,#181825,#11111b,#313244,#45475a)",
  "Default": "#3A3A3A"
 }
-@var text background-image        "BG - Custom"            "var(--background-image-fallback)"
+@var text uso-background-image    "BG - Custom"            ""
 @var range background-align-x     "BG - Align horizontal"  [50, 0, 100, 5, "%"]
 @var range background-align-y     "BG - Align vertical"    [50, 0, 100, 5, "%"]
 @var range dim-top                "BG - Dim top"           [50, 0, 100, 5, "%"]
@@ -69,10 +70,40 @@
 }
 ==/UserStyle== */
 @-moz-document domain("chatgpt.com") {
+/* uso section */
+:root {
+--background-image: url("/*[[uso-background-image]]*/");
+--background-image-fallback: /*[[background-image-fallback]]*/;
+--background-align-x: /*[[background-align-x]]*/;
+--background-align-y: /*[[background-align-y]]*/;
+--dim-top: /*[[dim-top]]*/;
+--dim-bottom: /*[[dim-bottom]]*/;
+--glass-blur: /*[[glass-blur]]*/;
+--backdrop-brightness: /*[[backdrop-brightness]]*/;
+--accent-color: /*[[accent-color]]*/;
+--sidebar-active-bullet: /*[[sidebar-active-bullet]]*/;
+--bottom-container-text: /*[[bottom-container-text]]*/;
+--chat-input-placeholder: /*[[chat-input-placeholder]]*/;
+--chat-input-radius: /*[[chat-input-radius]]*/;
+--chat-horizontal-margin: /*[[chat-horizontal-margin]]*/;
+--chat-max-width: /*[[chat-max-width]]*/;
+--chat-role-padding: /*[[chat-role-padding]]*/;
+--reading-max-width: /*[[reading-max-width]]*/;
+--code-background-color: /*[[code-background-color]]*/;
+--codeblock-width: /*[[codeblock-width]]*/;
+--codeblock-min-width: /*[[codeblock-min-width]]*/;
+--math-min-width: /*[[math-min-width]]*/;
+--math-margin: /*[[math-margin]]*/;
+
+}
+
 :root {
 --blur-around-text: 2px;
 /* derived properties */
---__backdrop-brightness-to-background: hsl(0, 0%, 0%, calc(40% - (100% - var(--backdrop-brightness)) / 2));
+--__backdrop-brightness-to-background: hsl(0,
+0%,
+0%,
+calc(40% - (100% - var(--backdrop-brightness)) / 2));
 
 }
 
@@ -83,8 +114,12 @@
 --theme-submit-btn-bg: var(--accent-color);
 --theme-secondary-btn-bg: var(--accent-color);
 --theme-entity-accent: var(--accent-color);
---theme-user-selection-bg: color-mix(in srgb, var(--accent-color), #0000);
---theme-attribution-highlight-bg: color-mix(in srgb, var(--accent-color), #0000);
+--theme-user-selection-bg: color-mix(in srgb,
+var(--accent-color),
+#0000);
+--theme-attribution-highlight-bg: color-mix(in srgb,
+var(--accent-color),
+#0000);
 
 }
 
@@ -134,10 +169,17 @@ div[data-testid="modal-settings"] > :first-child::before {
   }
 }
 
+/* XXX heuristics: check for existence of '-' in data-build, which is likely if custom background doesn't exist */
+/* equiv to if (uso-background-image === "") */
+html[data-build*="-/*[[uso-background-image]]*/"] > body {
+  --background-image: var(--background-image-fallback)
+}
+
 /* image background */
 body {
-  background: linear-gradient(rgba(0, 0, 0, var(--dim-top)), rgba(0, 0, 0, var(--dim-bottom))),
-  var(--background-image, var(--background-image-fallback)) no-repeat calc(100% - var(--background-align-x)) var(--background-align-y)/cover !important;
+  background: linear-gradient(rgba(0, 0, 0, var(--dim-top)),
+  rgba(0, 0, 0, var(--dim-bottom))),
+  var(--background-image) no-repeat calc(100% - var(--background-align-x)) var(--background-align-y)/cover !important;
 }
 
 /* === FROSTED GLASS EFFECT === */
@@ -170,7 +212,7 @@ aside.shadow-xxs {
 
 /* this entire section is just for search GPTs */
 @layer utilities {
-  div:has(> div > #search:focus),
+  div:has( > div > #search:focus),
   #search:focus {
     border-bottom-color: transparent;
     border-bottom-left-radius: 0 !important;
@@ -229,14 +271,18 @@ article[data-turn="assistant"] > div {
 }
 
 .user-message-bubble-color,
-.markdown :is(p, table, .katex-display) {
+.markdown :is(p,
+table,
+.katex-display) {
   position: relative;
   width: fit-content;
 }
 
 /* add blur to textual elements and surrounding */
 .user-message-bubble-color::before,
-.markdown :is(p, table, .katex-display)::before {
+.markdown :is(p,
+table,
+.katex-display)::before {
   position: absolute;
   content: "";
   inset: calc(-1 * var(--blur-around-text));
@@ -273,7 +319,8 @@ div.h-header-height.sticky {
 }
 
 /* paragraph layout helpers */
-.markdown :is(p, hr),
+.markdown :is(p,
+hr),
 markdown td,
 .user-message-bubble-color {
   max-width: var(--reading-max-width);
@@ -298,7 +345,8 @@ markdown td,
 .katex-display {
   margin-left: var(--math-margin);
   margin-right: var(--math-margin);
-  min-width: min(100%, var(--math-min-width));
+  min-width: min(100%,
+  var(--math-min-width));
   width: fit-content;
   max-width: 100%;
   scrollbar-color: var(--scrollbar-color) transparent;
@@ -320,7 +368,8 @@ markdown td,
 .markdown pre > div {
   contain: none;
   backdrop-filter: blur(var(--glass-blur));
-  min-width: min(100%, var(--codeblock-min-width));
+  min-width: min(100%,
+  var(--codeblock-min-width));
   width: fit-content;
   max-width: 100%;
 }
