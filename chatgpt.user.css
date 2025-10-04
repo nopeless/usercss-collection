@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.9.3
+@version        1.9.4
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -60,13 +60,9 @@
   "Full": "100%"
 }
 @var select math-min-width         "Math - Fit mode" {
-  "Compact": "calc(var(--spacing) * 8 * 6)",
+  "Compact left align": "calc(var(--spacing) * 8 * 6)",
   "Paragraph": "var(--reading-max-width)",
   "Full": "100%"
-}
-@var select math-margin           "Math - Align LaTeX" {
-  "Center": "auto",
-  "Left": "0"
 }
 ==/UserStyle== */
 @-moz-document domain("chatgpt.com") {
@@ -93,8 +89,6 @@
 --codeblock-width: /*[[codeblock-width]]*/;
 --codeblock-min-width: /*[[codeblock-min-width]]*/;
 --math-min-width: /*[[math-min-width]]*/;
---math-margin: /*[[math-margin]]*/;
-
 }
 
 :root {
@@ -350,11 +344,6 @@ markdown td,
 }
 
 /* === MATH VISUAL === */
-.katex {
-  margin-left: var(--math-margin);
-  margin-right: var(--math-margin);
-}
-
 .katex-display {
   min-width: min(100%,
   var(--math-min-width));
