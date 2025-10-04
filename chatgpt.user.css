@@ -20,14 +20,15 @@
  "No Game No Life": "url(https://picfiles.alphacoders.com/439/thumb-1920-439700.png)",
  "MuseDash Maria": "url(https://images.steamusercontent.com/ugc/2471994135749408790/79FFA5F097AB73974B94DBACBEF4CC39F6586C5A/)",
  "Minecraft Dungeons": "url(https://i0.wp.com/xboxera.com/wp-content/uploads/2020/04/Minecraft_Dungeons_Intro_Cinematic_Heroes_Gathering.png?w=3840&ssl=1)",
- "Gray": "gray",
  "Black": "black",
+ "Gray": "gray",
+ "White": "white",
  "Navy": "#303655",
  "Pastel": "linear-gradient(-45deg, #ffb3ba, #ffdfba, #ffffba, #baffc9, #bae1ff, #d7baff)",
  "Classic": "linear-gradient(45deg,#1e1e2e,#181825,#11111b,#313244,#45475a)",
  "Default": "#3A3A3A"
 }
-@var text uso-background-image    "BG - Custom"            ""
+@var text uso-background-image    "BG - Custom image url"  ""
 @var range background-align-x     "BG - Align horizontal"  [50, 0, 100, 5, "%"]
 @var range background-align-y     "BG - Align vertical"    [50, 0, 100, 5, "%"]
 @var range dim-top                "BG - Dim top"           [50, 0, 100, 5, "%"]
@@ -51,11 +52,18 @@
   "Full": "0"
 }
 
-@var range chat-padding-x "Chat - Horizontal margins"  [3,  0, 5,  0.5, "rem"]
+@var select uso-css-text-shadow   "Chat - Text shadow" {
+  "none": "",
+  "fast": "text-shadow: 1px 1px 0 black",
+  "light": "text-shadow: 0 0 7px black;",
+  "medium": "text-shadow: 0 0 7px black, 0 0 7px black;",
+  "heavy": "text-shadow: 2px 0 10px black, -2px 0 10px black, 0 2px 10px black, 0 -2px 10px black;"
+}
+@var range chat-padding-x         "Chat - Horizontal margins"  [3,  0, 5,  0.5, "rem"]
 @var range chat-max-width         "Chat - Max width"           [100,  50, 200,  10, "rem"]
+@var range reading-max-width      "Chat - Paragraph width"     [50,  10, 100,  5, "rem"]
 
 @var range chat-role-padding      "Message - Left/Right margin"  [4, 0, 10, 1, "rem"]
-@var range reading-max-width      "Reading - Paragraph width"    [50,  10, 100,  5, "rem"]
 
 @var color code-background-color  "Code - Background color"      "#10101040"
 @var select codeblock-width       "Code - Overflow" {
@@ -279,6 +287,12 @@ article[data-turn="assistant"] > div {
 
 .user-message-bubble-color {
   padding: 5px;
+}
+
+/* === text shadow === */
+.user-message-bubble-color,
+.markdown {
+  /*[[uso-css-text-shadow]]*/;
 }
 
 /* === text blur backdrop anchor for ::before === */
