@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.9.4
+@version        1.9.5
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -42,15 +42,23 @@
 @var text bottom-container-text   "Prompt - Text below"     "'You are loved <3'"
 @var text chat-input-placeholder  "Prompt - Placeholder"    "'ask away!'"
 @var range chat-input-radius      "Prompt - Border radius"  [28, 0, 28, 4, "px"]
+@var select chat-input-box-shadow "Prompt - Border style" {
+  "All": "rgba(0, 0, 0, 0.1) 0px 4px 12px 0px, rgba(255, 255, 255, 0.3) 0px 0px 1px 0px inset",
+  "Only top": "rgba(0, 0, 0, 0.1) 0px -12px 12px -12px, rgba(255, 255, 255, 0.3) 0px 2px 1px -2px inset"
+}
+@var select chat-input-padding-x  "Prompt - Width" {
+  "Align with chat": "var(--chat-padding-x)",
+  "Full": "0"
+}
 
-@var range chat-horizontal-margin "Chat - Horizontal margins"  [3,  0, 5,  0.5, "rem"]
+@var range chat-padding-x "Chat - Horizontal margins"  [3,  0, 5,  0.5, "rem"]
 @var range chat-max-width         "Chat - Max width"           [100,  50, 200,  10, "rem"]
 
 @var range chat-role-padding      "Message - Left/Right margin"  [4, 0, 10, 1, "rem"]
 @var range reading-max-width      "Reading - Paragraph width"    [50,  10, 100,  5, "rem"]
 
 @var color code-background-color  "Code - Background color"      "#10101040"
-@var select codeblock-width       "Code - Word wrap" {
+@var select codeblock-width       "Code - Overflow" {
   "Wrap": "100%",
   "Scroll": "max-content"
 }
@@ -81,7 +89,9 @@
 --bottom-container-text: /*[[bottom-container-text]]*/;
 --chat-input-placeholder: /*[[chat-input-placeholder]]*/;
 --chat-input-radius: /*[[chat-input-radius]]*/;
---chat-horizontal-margin: /*[[chat-horizontal-margin]]*/;
+--chat-input-box-shadow: /*[[chat-input-box-shadow]]*/;
+--chat-input-padding-x: /*[[chat-input-padding-x]]*/;
+--chat-padding-x: /*[[chat-padding-x]]*/;
 --chat-max-width: /*[[chat-max-width]]*/;
 --chat-role-padding: /*[[chat-role-padding]]*/;
 --reading-max-width: /*[[reading-max-width]]*/;
@@ -236,8 +246,15 @@ aside.shadow-xxs {
   margin: 0 auto;
   width: 100%;
   max-width: var(--chat-max-width);
-  padding-left: var(--chat-horizontal-margin);
-  padding-right: var(--chat-horizontal-margin);
+  padding-left: var(--chat-padding-x);
+  padding-right: var(--chat-padding-x);
+}
+
+#thread-bottom > div:first-child {
+/* effectively ternary */
+  max-width: calc(var(--chat-input-padding-x) + 100%);
+  padding-left: var(--chat-input-padding-x);
+  padding-right: var(--chat-input-padding-x);
 }
 
 #thread-bottom > div:first-child > div:first-child {
@@ -316,8 +333,8 @@ div.h-header-height.sticky {
 
 /* Change horizontal margins around chat*/
 .text-base {
-  padding-left: var(--chat-horizontal-margin);
-  padding-right: var(--chat-horizontal-margin);
+  padding-left: var(--chat-padding-x);
+  padding-right: var(--chat-padding-x);
 }
 
 /* paragraph layout helpers */
@@ -407,6 +424,7 @@ markdown td,
 /* chat input box radius */
 form.group\/composer > div:last-child > div:first-child {
   border-radius: var(--chat-input-radius) !important;
+  box-shadow: var(--chat-input-box-shadow);
 }
 
 /* remove margin fix chat content bleeding into chat input box */
