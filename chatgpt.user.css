@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.9.7
+@version        1.9.8
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -162,7 +162,6 @@ a,
 button,
 header,
 span,
-code,
 ul,
 /* prompt input bottom fade */
 .content-fade::after,
@@ -296,6 +295,9 @@ article[data-turn="assistant"] > div {
 #history {
   /*[[uso-css-text-shadow]]*/;
 }
+.__menu-item[data-active] {
+  text-shadow: none;
+}
 
 /* === text blur backdrop anchor for ::before === */
 .user-message-bubble-color,
@@ -394,12 +396,14 @@ markdown td,
 /* === CODEBLOCK VISUAL === */
 /* code background color */
 .markdown pre .bg-token-sidebar-surface-primary,
-.markdown strong > code {
+.markdown code:not([class]) {
   background: var(--code-background-color) !important;
 }
 
 /* allow layout calculations for code blocks */
 .markdown pre > div {
+  text-shadow: none;
+
   contain: none;
   backdrop-filter: blur(var(--glass-blur));
   min-width: min(100%,
