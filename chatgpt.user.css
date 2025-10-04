@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.9.2
+@version        1.9.3
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -359,6 +359,9 @@ markdown td,
   max-width: 100%;
   scrollbar-color: var(--scrollbar-color) transparent;
   overflow-x: scroll;
+/*   for reasons beyond my understanding, sometimes katex span elements overflow
+  visually (not bb) and this is the only way to compensate for that */
+  padding: 2px;
 }
 
 /* === CODEBLOCK VISUAL === */
