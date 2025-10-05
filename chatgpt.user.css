@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.9.8
+@version        1.10.0
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -47,9 +47,9 @@
   "All": "rgba(0, 0, 0, 0.1) 0px 4px 12px 0px, rgba(255, 255, 255, 0.3) 0px 0px 1px 0px inset",
   "Only top": "rgba(0, 0, 0, 0.1) 0px -12px 12px -12px, rgba(255, 255, 255, 0.3) 0px 2px 1px -2px inset"
 }
-@var select chat-input-padding-x  "Prompt - Width" {
-  "Align with chat": "var(--chat-padding-x)",
-  "Full": "0"
+@var select chat-input-max-width  "Prompt - Width" {
+  "Align with chat": "calc(min(var(--chat-max-width), 100%) - 2 * var(--chat-padding-x))",
+  "Full": "none"
 }
 
 @var select uso-css-text-shadow   "Chat - Text shadow" {
@@ -99,7 +99,7 @@
 --chat-input-placeholder: /*[[chat-input-placeholder]]*/;
 --chat-input-radius: /*[[chat-input-radius]]*/;
 --chat-input-box-shadow: /*[[chat-input-box-shadow]]*/;
---chat-input-padding-x: /*[[chat-input-padding-x]]*/;
+--chat-input-max-width: /*[[chat-input-max-width]]*/;
 --chat-padding-x: /*[[chat-padding-x]]*/;
 --chat-max-width: /*[[chat-max-width]]*/;
 --chat-role-padding: /*[[chat-role-padding]]*/;
@@ -249,8 +249,7 @@ aside.shadow-xxs {
 
 /* === CHAT VISUAL === */
 /* implement chat-max-width */
-#page-header + div > div:first-child > div:last-child > div:last-child,
-#thread-bottom > div:first-child {
+#page-header + div > div:first-child > div:last-child > div:last-child {
   margin: 0 auto;
   width: 100%;
   max-width: var(--chat-max-width);
@@ -259,10 +258,9 @@ aside.shadow-xxs {
 }
 
 #thread-bottom > div:first-child {
-/* effectively ternary */
-  max-width: calc(var(--chat-input-padding-x) + 100%);
-  padding-left: var(--chat-input-padding-x);
-  padding-right: var(--chat-input-padding-x);
+  padding-left: 0;
+  padding-right: 0;
+  max-width: var(--chat-input-max-width);
 }
 
 #thread-bottom > div:first-child > div:first-child {
