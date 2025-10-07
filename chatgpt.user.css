@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.10.0
+@version        1.10.1
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -196,14 +196,16 @@ body {
 
 /* === FROSTED GLASS EFFECT === */
 /* Use tailwind backdrop system for other elements */
-/* clicking account button */
-[data-radix-popper-content-wrapper] > div:first-child,
 /* narrow mode overlap */
 #stage-popover-sidebar,
 /* search GPTs */
 #search,
 /* when selection ask chatgpt */
 .btn.active\:opacity-1,
+/* voice mode */
+.fixed,
+/* clicking account button */
+[data-radix-popper-content-wrapper] > div:first-child,
 /* modal settings */
 [data-testid="modal-settings"] > div,
 /* modal search chats */
@@ -293,7 +295,7 @@ article[data-turn="assistant"] > div {
 #history {
   /*[[uso-css-text-shadow]]*/;
 }
-.__menu-item[data-active] {
+.__menu-item[data-active], code:not([class]) {
   text-shadow: none;
 }
 
@@ -473,6 +475,10 @@ form.group\/composer > div:last-child > div:first-child {
 button[aria-checked] > span,
 button.btn-primary {
   background: var(--theme-entity-accent) !important;
+}
+
+button.btn-primary svg {
+  color: black;
 }
 
 /* switch and button background */
