@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.10.2
+@version        1.10.3
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -158,7 +158,6 @@ background: var(--theme-secondary-btn-bg);
 /* remove all background */
 div,
 aside,
-a,
 button,
 header,
 span,
@@ -486,12 +485,15 @@ button[aria-checked] {
   background: gray !important;
 }
 
+.group\/sidebar-expando-section {
+  margin-bottom: 0;
+}
+
 /*   fix side panel scrolling overlap (this is the only fix) */
-.group\/sidebar-expando-section:last-child {
+nav[aria-label="Chat history"] > :nth-last-child(1 of .group\/sidebar-expando-section) {
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
-  margin-bottom: 0;
 }
 
 #history {
