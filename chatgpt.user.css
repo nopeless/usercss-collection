@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.10.3
+@version        1.10.4
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -200,9 +200,9 @@ body {
 /* search GPTs */
 #search,
 /* when selection ask chatgpt */
-.btn.active\:opacity-1,
+.btn.active\:opacity-1 > div,
 /* voice mode */
-.fixed,
+.fixed.start-0.top-0,
 /* clicking account button */
 [data-radix-popper-content-wrapper] > div:first-child,
 /* modal settings */
@@ -271,6 +271,13 @@ aside.shadow-xxs {
 /* Change chat max width */
 .group\/turn-messages {
   max-width: none;
+}
+
+@layer utilities {
+  .prose :where(ol):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+/*    needed because 3 character decimal (over 100 items) was causing issues */
+   padding-inline-start: 2.75em;
+  }
 }
 
 /* ensure margins for small screens */
