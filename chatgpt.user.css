@@ -203,8 +203,6 @@ body {
 .btn.active\:opacity-1,
 /* voice mode */
 .fixed.start-0.top-0,
-/* clicking account button */
-[data-radix-popper-content-wrapper] > div:first-child,
 /* modal settings */
 [data-testid="modal-settings"] > div,
 /* modal search chats */
@@ -217,6 +215,11 @@ body {
 aside.shadow-xxs {
   backdrop-filter: blur(var(--glass-blur)) brightness(var(--backdrop-brightness));
   background: transparent;
+}
+
+/* clicking account button */
+[data-radix-popper-content-wrapper] > div:first-child {
+  backdrop-filter: blur(var(--glass-blur));
 }
 
 .popover {
