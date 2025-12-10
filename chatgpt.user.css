@@ -250,7 +250,7 @@ aside.shadow-xxs {
 
 /* === CHAT VISUAL === */
 /* implement chat-max-width */
-#page-header + div > div:first-child > div:last-child > div:last-child {
+div:has(> article[data-turn-id]) {
   margin: 0 auto;
   width: 100%;
   max-width: var(--chat-max-width);
@@ -355,7 +355,7 @@ table,
 }
 
 /* Change horizontal margins around chat*/
-.text-base {
+div:has(> article[data-turn-id]) {
   padding-left: var(--chat-padding-x);
   padding-right: var(--chat-padding-x);
 }
