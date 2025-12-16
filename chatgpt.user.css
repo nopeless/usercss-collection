@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.10.8
+@version        1.10.9
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -247,6 +247,9 @@ aside.shadow-xxs {
 }
 
 /* === SIDEBAR === */
+.__menu-item[data-active] {
+  justify-content: normal;
+}
 .__menu-item[data-active]::before {
   content: var(--sidebar-active-bullet);
 }
@@ -449,6 +452,11 @@ markdown td,
   content: var(--chat-input-placeholder) !important;
 }
 
+/* fix margin bottom for some pages */
+#thread-bottom > div:first-child > div:first-child {
+  margin-bottom: 0;
+}
+
 /* chat input box radius */
 form.group\/composer > div:last-child > div:first-child {
   border-radius: var(--chat-input-radius) !important;
@@ -461,16 +469,17 @@ form.group\/composer > div:last-child > div:first-child {
 }
 
 /* change chatgpt can make mistakes message + style changes */
-#thread-bottom-container > :last-child {
+#thread-bottom + div {
   padding: 0;
   min-height: 0;
+  margin-top: 0;
 }
 
-#thread-bottom-container > :last-child > div {
+#thread-bottom + div > div {
   font-size: 0;
 }
 
-#thread-bottom-container > :last-child > div::before {
+#thread-bottom + div > div::before {
   font-size: 12px;
   display: block;
   text-align: center;
