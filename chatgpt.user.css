@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Frosted Glass UI - nopeless
 @namespace      github.com/nopeless/usercss-collection/chatgpt.user.css
-@version        1.11.0
+@version        1.12.0
 @description    rosted Glass UI overhaul that enhances ChatGPT UI by nopeless. Custom backgrounds and accent color supported with many more configurable options
 @author         nopeless
 @updateURL      https://github.com/nopeless/usercss-collection/raw/refs/heads/main/chatgpt.user.css
@@ -76,7 +76,7 @@
   "Full": "100%"
 }
 @var select math-min-width         "Math - Fit mode" {
-  "Compact left align": "calc(var(--spacing) * 8 * 6)",
+  "Compact": "calc(var(--spacing) * 8 * 6)",
   "Paragraph": "var(--reading-max-width)",
   "Full": "100%"
 }
@@ -311,35 +311,6 @@ article[data-turn="assistant"] > div {
   text-shadow: none;
 }
 
-/* === text blur backdrop anchor for ::before === */
-.user-message-bubble-color,
-.markdown :is(p,
-table,
-.katex) {
-  position: relative;
-}
-
-/* add blur to textual elements and surrounding */
-.user-message-bubble-color::before,
-.markdown :is(p)::before {
-  position: absolute;
-  content: "";
-  inset: calc(-1 * var(--blur-around-text));
-  border-radius: calc(2 * var(--blur-around-text));
-  backdrop-filter: blur(var(--glass-blur));
-  z-index: -1;
-}
-
-/* add non-overflowing blur to certain elements */
-.markdown :is(table,
-.katex)::before {
-  position: absolute;
-  content: "";
-  inset: 0;
-  backdrop-filter: blur(var(--glass-blur));
-  z-index: -1;
-}
-
 /* header consistency fix when resizing */
 #page-header {
   width: 100%;
@@ -363,6 +334,41 @@ hr),
 markdown td,
 .user-message-bubble-color {
   max-width: var(--reading-max-width);
+}
+
+p {
+  width: fit-content;
+}
+
+/* relative positioning */
+.user-message-bubble-color,
+p,
+.markdown > span[math],
+.markdown .katex {
+  position: relative;
+}
+
+/* primary */
+:is(.user-message-bubble-color,
+p,
+.markdown > span[math],
+.markdown .katex)::before {
+  position: absolute;
+  content: "";
+  z-index: -1;
+
+  inset: calc(-1 * var(--blur-around-text));
+  border-radius: calc(2 * var(--blur-around-text));
+  backdrop-filter: blur(var(--glass-blur));
+/*   background-color: #ff000077 !important; */
+}
+
+/* reset */
+:is(.markdown > span[math] .katex)::before {
+  inset: calc(-1 * var(--blur-around-text));
+  border-radius: calc(2 * var(--blur-around-text));
+  backdrop-filter: blur(var(--glass-blur));
+/*   background-color: #00ff0077 !important; */
 }
 
 /* TABLE REWRITE */
@@ -393,6 +399,11 @@ markdown td,
 /*   for reasons beyond my understanding, sometimes katex span elements overflow
   visually (not bb) and this is the only way to compensate for that */
   padding: 2px;
+}
+
+.katex {
+  width: fit-content;
+  margin: 0 auto;
 }
 
 /* === CODEBLOCK VISUAL === */
@@ -450,9 +461,16 @@ markdown td,
 
 /* chat input box radius */
 form.group\/composer > div:last-child > div:first-child {
-  backdrop-filter: blur(var(--glass-blur));
   border-radius: var(--chat-input-radius) !important;
   box-shadow: var(--chat-input-box-shadow);
+}
+
+/* the things i do for this userstyle... */
+#thread-bottom-container:has(> :last-child.w-full) {
+  backdrop-filter: blur(var(--glass-blur));
+}
+#thread-bottom:has(+ [class=""]) {
+  backdrop-filter: blur(var(--glass-blur));
 }
 
 /* remove margin fix chat content bleeding into chat input box */
@@ -462,12 +480,13 @@ form.group\/composer > div:last-child > div:first-child {
 
 /* change chatgpt can make mistakes message + style changes */
 #thread-bottom + div {
-  padding: 0;
   min-height: 0;
   margin-top: 0;
 }
 
 #thread-bottom + div > div {
+  padding: 0;
+  min-height: 0;
   font-size: 0;
 }
 
